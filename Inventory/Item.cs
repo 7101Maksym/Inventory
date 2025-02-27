@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,41 +8,49 @@ namespace Inventory
 {
     public class Item
     {
-        public string _name;
-        public string _description;
-        public string _type;
-        public int _count = 0;
+        private int _name;
+        private int _count = 0;
 
-        public Item(string name, string description, string type, int count)
+        public Item(int name, int count)
         {
-            _name = name;
-            _description = description;
-            _type = type;
             _count = count;
+            _name = name;
         }
 
-        public int Count
+        public int name
         {
-            get { return _count; }
-            set { _count += value; }
+            get
+            {
+                return _name;
+            }
+            init
+            {
+                _name = value;
+            }
         }
 
-        public string Name
+        public int count
         {
-            get { return _name; }
-            set { _name = value; }
+            get
+            {
+                return _count; 
+            }
         }
 
-        public string Description
+        public int add
         {
-            get { return _description; }
-            set { _description = value; }
+            set
+            {
+                _count += value;
+            }
         }
 
-        public string Type
+        public int remove
         {
-            get { return _type; }
-            set { _type = value; }
+            set
+            {
+                _count -= value;
+            }
         }
     }
 }
