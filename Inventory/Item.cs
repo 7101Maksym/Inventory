@@ -37,20 +37,15 @@ namespace Inventory
             }
         }
 
-        public int add
+        public void add(int value)
         {
-            set
-            {
-                _count += value;
-            }
+            _count += value;
         }
 
-        public int remove
+        public void remove(int value)
         {
-            set
-            {
-                _count -= value;
-            }
+            _count -= value;
         }
     }
 }
+
