@@ -1,13 +1,15 @@
-﻿namespace Inventory
+namespace Inventory
 {
 	internal class Program
 	{
+		static private Get_string_by_id _getter = new Get_string_by_id();
+
 		static Player SetPlayer()
 		{
-			string name;
+			string name, strType;
 			int type;
 
-            (string, string, int, int, int, int, int) inform;
+            Dictionary<string, int> inform = new Dictionary<string, int>();
 
 
             Console.Write("Введите имя игрока: \n");
@@ -32,9 +34,10 @@
 
 			Player player = new(name, type);
 
-            inform = player.GetPlayerInformation;
+            inform = _getter.GetPlayerParametrs(type);
+			strType = _getter.GetStringPlayerType(type);
 
-			Console.WriteLine($"Создан персонаж с характеристиками:\nИмя: {inform.Item1}\nТип: {inform.Item2}\nЗдоровье: {inform.Item3}\nЗащита: {inform.Item4}\nСила: {inform.Item5}\nЛовкость: {inform.Item6}\nИнтеллект: {inform.Item7}\n");
+			Console.WriteLine($"Создан персонаж с характеристиками:\nИмя: {name}\nТип: {strType}\nЗдоровье: {inform["_healths"]}\nЗащита: {inform["_defense"]}\nСила: {inform["_strength"]}\nЛовкость: {inform["_dexterity"]}\nИнтеллект: {inform["_skill"]}\n");
 
 			Console.WriteLine("Нажмите любую клавишу:\n");
 			Console.ReadKey();
@@ -57,34 +60,25 @@
             Console.WriteLine("9 - Кольчужные ботинки");
         }
 
-		static void PrintInventory(Inventory inventory)
-		{
-            (string[], string[], string[], int[]) inform = inventory.get_information_for_player;
-
-			for (int i = 0; i < inform.Item1.Length; i++)
-			{
-				Console.WriteLine($"Название: {inform.Item1[i]}\nОписание: {inform.Item2[i]}\nТип: {inform.Item3[i]}\nКоличество: {inform.Item4[i]}\n\n");
-			}
-        }
-
 		static void Main(string[] args)
 		{
 			Player player = SetPlayer();
 
 			Inventory inventory = new Inventory();
+			Display_inventory display = new Display_inventory();
 			
 			Console.Clear();
 
 			while (true)
 			{
-				Console.WriteLine("Нажмите клавишу I, чтобы открыть инвентарь, клавишу A, чтобы добавить предмет в инвентарь, клавишу R, чтобы удалить предмет из инвенторя, или любую другую клавишу, чтобы завершить программу.");
+				Console.WriteLine("Нажмите клавишу I, чтобы открыть инвентарь, клавишу A, чтобы добавить предмет в инвентарь, клавишу R, чтобы удалить предмет из инвентаря, или любую другую клавишу, чтобы завершить программу (клавиши английской раскладки).");
 
 				ConsoleKey k = Console.ReadKey().Key;
 
                 if (k == ConsoleKey.I)
 				{
 					Console.Clear();
-					PrintInventory(inventory);
+					display.PrintInventory(inventory.GetItems());
 				}
 				else if (k == ConsoleKey.A)
 				{
@@ -112,6 +106,10 @@
 					if (!inventory.AddItem(name, count))
 					{
 						Console.WriteLine("Неверный ввод!");
+					}
+					else
+					{
+						Console.WriteLine("Успешно добавлено!\n");
 					}
                 }
                 else if (k == ConsoleKey.R)
@@ -141,6 +139,10 @@
                     {
                         Console.WriteLine("Неверный ввод!");
                     }
+                    else
+                    {
+                        Console.WriteLine("Успешно удалено!\n");
+                    }
                 }
                 else
 				{
@@ -150,4 +152,3 @@
 		}
 	}
 }
-
